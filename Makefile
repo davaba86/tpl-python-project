@@ -1,6 +1,6 @@
-#
+##
 # Variables
-#
+##
 
 SHELL           := /bin/bash
 PROJECT_NAME     = template-python-project
@@ -8,16 +8,16 @@ PYTHON_VERSION   = 3.9.16
 PYTHON_MAIN_FILE = __main__.py
 VENV_NAME        = ${PROJECT_NAME}-${PYTHON_VERSION}
 
-#
+##
 # tput Coloring
-#
+##
 
 tput_yellow = $(shell tput setaf 3)
 tput_end    = $(shell tput sgr0)
 
-#
+##
 # Targets
-#
+##
 
 macos-prepare:
 	@echo -e "\n$(tput_yellow)Upgrading homebrew and installing prerequisites$(tput_end)"
