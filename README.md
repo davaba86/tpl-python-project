@@ -2,7 +2,7 @@
 
 ## Summary
 
-Often we find ourselves using the same type of environment, and in my case whenever I create Python projects I try to use Docker. However since VSCode often need to interact with Python such as packages Black, boto3 liniting I also want to isolate them into envs.
+Often we find ourselves using the same type of environment, and in my case whenever I create Python projects I try to use Docker. However since I use VSCode with linting, I often need to download packages so that I'm able to use black, boto3 etc.
 
 You could create one large venv for VSCode to use as the default python interpreter but I find it better to keep envs smaller and not risk of packages colliding with each other.
 
