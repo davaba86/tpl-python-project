@@ -75,5 +75,6 @@ docker-run:
 		--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 		--env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 		--env AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} \
+		--volume $(shell pwd)/source/:/source/ \
 		$(PROJECT_NAME):latest \
 		python3 $(PYTHON_MAIN_FILE)
