@@ -16,7 +16,7 @@ tput_yellow = $(shell tput setaf 3)
 tput_end    = $(shell tput sgr0)
 
 ##
-# Targets
+# Targets: Code Development in VSCode
 ##
 
 macos-prepare:
@@ -60,6 +60,10 @@ venv-ls:
 venv-rm:
 	@echo -e "\n$(tput_yellow)Removing ${VENV_NAME}$(tput_end)"
 	pyenv virtualenv-delete --force ${VENV_NAME}
+
+##
+# Targets: Code Execution via Docker
+##
 
 docker-build:
 	@echo -e "\n$(tput_yellow)Building local docker image($(PROJECT_NAME):latest)$(tput_end)"
