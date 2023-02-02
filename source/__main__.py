@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 
-import json
 from os import path
+import sys
+import json
+import logging
 import requests
+
+logging.basicConfig(
+    filename="script_logging.log",
+    level=logging.DEBUG,
+    format="%(asctime)s - %(message)s",
+    datefmt="%Y-%M-%d %H:%M:%S",
+)
 
 
 class InteractAPI:
@@ -12,7 +21,10 @@ class InteractAPI:
 
     def __init__(self, url, file_name):
         self.url = url
+        logging.info(f"url: {url}")
+
         self.file_name = file_name
+        logging.info(f"file_name: {file_name}")
 
     def query_api(self):
         """
@@ -24,6 +36,7 @@ class InteractAPI:
 
         r = requests.get(url)
         data = r.text
+        logging.info(f"data: {data}")
 
         return data
 
@@ -60,6 +73,8 @@ class InteractAPI:
 
                 beer_list.append(beer)
 
+        logging.info(f"beer_list: {beer_list}")
+
         return beer_list
 
 
@@ -74,9 +89,10 @@ if __name__ == "__main__":
     api_data_object = InteractAPI(url, file_name)
 
     # If file already exists and with data, don't query the API
-    if not path.exists(file_name) and path.getsize(file_name) != 0:
-        json_data = api_data_object.query_api()
-        api_data_object.cache_data(json_data)
+    if not path.isfile(file_name):
+        if path.getsize(file_name) != 0:
+            json_data = api_data_object.query_api()
+            api_data_object.cache_data(json_data)
 
     filtered_data = api_data_object.read_cached_data()
 
