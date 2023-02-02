@@ -9,7 +9,7 @@ import requests
 logging.basicConfig(
     filename="script_logging.log",
     level=logging.DEBUG,
-    format="%(asctime)s - %(message)s",
+    format="%(asctime)s - %(levelname)s:%(message)s",
     datefmt="%Y-%M-%d %H:%M:%S",
 )
 
