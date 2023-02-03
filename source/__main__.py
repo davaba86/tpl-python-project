@@ -6,12 +6,24 @@ import json
 import logging
 import requests
 
-logging.basicConfig(
-    filename="script_logging.log",
-    level=logging.DEBUG,
-    format="%(asctime)s - %(levelname)s:%(message)s",
-    datefmt="%Y-%M-%d %H:%M:%S",
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+format = logging.Formatter(
+    "%(levelname)s, %(asctime)s, %(name)s, %(funcName)s, %(message)s"
 )
+
+file_handler = logging.FileHandler("app-run.log")
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(format)
+
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.INFO)
+stream_handler.setFormatter(format)
+
+
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
 
 
 class InteractAPI:
@@ -21,10 +33,10 @@ class InteractAPI:
 
     def __init__(self, url, file_name):
         self.url = url
-        logging.info(f"url: {url}")
+        logger.debug(f"variable (url) set: {url}")
 
         self.file_name = file_name
-        logging.info(f"file_name: {file_name}")
+        logger.debug(f"variable (file_name) set: {file_name}")
 
     def query_api(self):
         """
@@ -34,11 +46,16 @@ class InteractAPI:
             str: Json output.
         """
 
-        r = requests.get(url)
-        data = r.text
-        logging.info(f"data: {data}")
+        try:
+            response = requests.get(url)
 
-        return data
+            data = response.text
+            logger.debug(f"variable (data) set: {data}")
+
+            return data
+        except:
+            logger.exception(f"unable to properly download api data")
+            sys.exit(0)
 
     def cache_data(self, json_data):
         """
@@ -73,7 +90,8 @@ class InteractAPI:
 
                 beer_list.append(beer)
 
-        logging.info(f"beer_list: {beer_list}")
+        logger.debug(f"variable (beer_list) set: {beer_list}")
+        logger.info("detected locally cached data; nothing left to do")
 
         return beer_list
 
@@ -90,11 +108,13 @@ if __name__ == "__main__":
 
     # If file already exists and with data, don't query the API
     if not path.isfile(file_name):
-        if path.getsize(file_name) != 0:
-            json_data = api_data_object.query_api()
-            api_data_object.cache_data(json_data)
+        logger.info(f"{file_name} not present; creating file")
+        with open(file_name, "w") as file:
+            pass
 
-    filtered_data = api_data_object.read_cached_data()
+    if path.getsize(file_name) == 0:
+        logger.info(f"{file_name} empty file detected; downloading data")
+        json_data = api_data_object.query_api()
+        api_data_object.cache_data(json_data)
 
-    # Make the response more human readable
-    print(json.dumps(filtered_data, indent=4))
+    api_data_object.read_cached_data()
