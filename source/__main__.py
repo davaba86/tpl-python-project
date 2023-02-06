@@ -85,7 +85,7 @@ class InteractAPI:
                 beer_list.append(beer)
 
         logger.debug(f"variable (beer_list) set: {beer_list}")
-        logger.info("detected locally cached data; nothing left to do")
+        logger.info("detected locally cached data; won't pull data from api")
 
         return beer_list
 
@@ -111,4 +111,4 @@ if __name__ == "__main__":
         json_data = api_data_object.query_api_no_auth()
         api_data_object.cache_data(json_data)
 
-    api_data_object.read_cached_data()
+    locally_cached_data = api_data_object.read_cached_data()
