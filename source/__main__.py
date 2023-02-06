@@ -6,24 +6,28 @@ import json
 import logging
 import requests
 
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-format = logging.Formatter(
-    "%(levelname)s, %(asctime)s, %(name)s, %(funcName)s, %(message)s"
+# Create logging handlers
+handler_file = logging.FileHandler("app-run.log")
+handler_stream = logging.StreamHandler()
+
+# Config levels and formatter for each handler
+handler_file.setLevel(logging.DEBUG)
+handler_file_format = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
+handler_file.setFormatter(handler_file_format)
 
-file_handler = logging.FileHandler("app-run.log")
-file_handler.setLevel(logging.DEBUG)
-file_handler.setFormatter(format)
+handler_stream.setLevel(logging.INFO)
+handler_stream_format = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+handler_stream.setFormatter(handler_stream_format)
 
-stream_handler = logging.StreamHandler()
-stream_handler.setLevel(logging.INFO)
-stream_handler.setFormatter(format)
-
-
-logger.addHandler(file_handler)
-logger.addHandler(stream_handler)
+# Add handlers to the logger
+logger.addHandler(handler_file)
+logger.addHandler(handler_stream)
 
 
 class InteractAPI:
@@ -46,15 +50,17 @@ class InteractAPI:
             str: Json output.
         """
 
-        try:
-            response = requests.get(url)
+        response = requests.get(url)
 
+        if response.status_code == 200:
             data = response.text
+            logger.info("sucessfully reached remote api")
             logger.debug(f"variable (data) set: {data}")
-
             return data
-        except:
-            logger.exception(f"unable to properly download api data")
+        else:
+            logger.error(
+                f"{response.status_code}, unable to properly download api data"
+            )
             sys.exit(0)
 
     def cache_data(self, json_data):
