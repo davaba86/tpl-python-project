@@ -1,0 +1,25 @@
+version: 1
+
+formatters:
+  simple:
+    format: "%(name)s - %(levelname)s - %(message)s"
+  verbose:
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: simple
+    stream: ext://sys.stdout
+  file:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: verbose
+    filename: logs/app-run.log
+
+loggers:
+  "__main__":
+    level: DEBUG
+    handlers: [console,file]
+    propagate: no

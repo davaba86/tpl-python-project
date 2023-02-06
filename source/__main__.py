@@ -1,33 +1,19 @@
 #!/usr/bin/env python3
 
 from os import path
-import sys
 import json
-import logging
+import logging.config
 import requests
+import sys
+import yaml
 
+# Read logging config from file
+with open("config.yaml", "r") as f:
+    config = yaml.load(f, Loader=yaml.FullLoader)
 
+# Apply logging handlers to execution
+logging.config.dictConfig(config)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-
-# Create logging handlers
-handler_file = logging.FileHandler("app-run.log")
-handler_stream = logging.StreamHandler()
-
-# Config levels and formatter for each handler
-handler_file.setLevel(logging.DEBUG)
-handler_file_format = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-handler_file.setFormatter(handler_file_format)
-
-handler_stream.setLevel(logging.INFO)
-handler_stream_format = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
-handler_stream.setFormatter(handler_stream_format)
-
-# Add handlers to the logger
-logger.addHandler(handler_file)
-logger.addHandler(handler_stream)
 
 
 class InteractAPI:
@@ -110,7 +96,7 @@ if __name__ == "__main__":
     """
 
     url = "https://api.punkapi.com/v2/beers"
-    file_name = "api-downloaded-data.json"
+    file_name = "data/api-downloaded-data.json"
 
     api_data_object = InteractAPI(url, file_name)
 
