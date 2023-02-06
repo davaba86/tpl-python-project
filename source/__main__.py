@@ -42,7 +42,7 @@ class InteractAPI:
         self.file_name = file_name
         logger.debug(f"variable (file_name) set: {file_name}")
 
-    def query_api(self):
+    def query_api_no_auth(self):
         """
         Query API.
 
@@ -50,7 +50,9 @@ class InteractAPI:
             str: Json output.
         """
 
-        response = requests.get(url)
+        headers = {"Content-Type": "application./json"}
+
+        response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
             data = response.text
@@ -108,7 +110,7 @@ if __name__ == "__main__":
     """
 
     url = "https://api.punkapi.com/v2/beers"
-    file_name = "json-downloaded-data.json"
+    file_name = "api-downloaded-data.json"
 
     api_data_object = InteractAPI(url, file_name)
 
@@ -120,7 +122,7 @@ if __name__ == "__main__":
 
     if path.getsize(file_name) == 0:
         logger.info(f"{file_name} empty file detected; downloading data")
-        json_data = api_data_object.query_api()
+        json_data = api_data_object.query_api_no_auth()
         api_data_object.cache_data(json_data)
 
     api_data_object.read_cached_data()
