@@ -23,10 +23,10 @@ class InteractAPI:
 
     def __init__(self, url, file_name):
         self.url = url
-        logger.debug(f"variable (url) set: {url}")
+        logger.debug(f"variable (url): {url}")
 
         self.file_name = file_name
-        logger.debug(f"variable (file_name) set: {file_name}")
+        logger.debug(f"variable (file_name): {file_name}")
 
     def query_api_no_auth(self):
         """
@@ -43,7 +43,7 @@ class InteractAPI:
         if response.status_code == 200:
             data = response.text
             logger.info("sucessfully reached remote api")
-            logger.debug(f"variable (data) set: {data}")
+            logger.debug(f"variable (data): {data}")
             return data
         else:
             logger.error(
@@ -84,7 +84,7 @@ class InteractAPI:
 
                 beer_list.append(beer)
 
-        logger.debug(f"variable (beer_list) set: {beer_list}")
+        logger.debug(f"variable (beer_list): {beer_list}")
         logger.info("detected locally cached data; won't pull data from api")
 
         return beer_list
