@@ -81,3 +81,17 @@ docker-run:
 		--env AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} \
 		$(PROJECT_NAME):latest \
 		python3 $(PYTHON_MAIN_FILE)
+
+docker-exec:
+	@echo -e "\n$(tput_yellow)Opening an interactive terminal with bash$(tput_end)"
+	docker run \
+		--rm \
+		--interactive \
+		--tty \
+		--volume $(shell pwd)/source/:/source/ \
+		--workdir /source/ \
+		--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+		--env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+		--env AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} \
+		--entrypoint /bin/bash \
+		$(PROJECT_NAME):latest \
