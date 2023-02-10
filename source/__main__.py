@@ -7,13 +7,21 @@ import requests
 import sys
 import yaml
 
-# Read logging config from file
-with open("config.yaml", "r") as f:
-    config = yaml.load(f, Loader=yaml.FullLoader)
 
-# Apply logging handlers to execution
-logging.config.dictConfig(config)
-logger = logging.getLogger(__name__)
+class CodeStandardisation:
+    def __init__(self):
+        pass
+
+    def apply_custom_logging():
+        # Read logging config from file
+        with open("config.yaml", "r") as f:
+            config = yaml.load(f, Loader=yaml.FullLoader)
+
+        # Apply logging handlers to execution
+        logging.config.dictConfig(config)
+        logger = logging.getLogger(__name__)
+
+        return logger
 
 
 class InteractAPI:
@@ -94,6 +102,9 @@ if __name__ == "__main__":
     """
     _summary_
     """
+
+    log = CodeStandardisation
+    logger = log.apply_custom_logging()
 
     url = "https://api.punkapi.com/v2/beers"
     file_name = "data/api-downloaded-data.json"
