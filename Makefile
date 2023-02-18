@@ -67,11 +67,11 @@ venv-rm:
 
 docker-build:
 	@echo -e "\n$(tput_yellow)Building local docker image($(PROJECT_NAME):latest)$(tput_end)"
-	docker build --tag $(PROJECT_NAME):latest --file container/Dockerfile .
+	@docker build --tag $(PROJECT_NAME):latest --file container/Dockerfile .
 
 docker-run:
 	@echo -e "\n$(tput_yellow)Running python project from inside docker container$(tput_end)"
-	docker run \
+	@docker run \
 		--rm \
 		--interactive \
 		--volume $(shell pwd)/source/:/source/ \
@@ -84,7 +84,7 @@ docker-run:
 
 docker-exec:
 	@echo -e "\n$(tput_yellow)Opening an interactive terminal with bash$(tput_end)"
-	docker run \
+	@docker run \
 		--rm \
 		--interactive \
 		--tty \
