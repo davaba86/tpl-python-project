@@ -9,12 +9,12 @@ import yaml
 
 
 class CodeStandardisation:
-    def __init__(self):
-        pass
+    def __init__(self, logger_config):
+        self.logger_config = logger_config
 
-    def apply_custom_logging():
+    def apply_custom_logging(self):
         # Read logging config from file
-        with open("config.yaml", "r") as f:
+        with open(self.logger_config, "r") as f:
             config = yaml.load(f, Loader=yaml.FullLoader)
 
         # Apply logging handlers to execution
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     _summary_
     """
 
-    log = CodeStandardisation
+    log = CodeStandardisation(logger_config="config.yaml")
     logger = log.apply_custom_logging()
 
     url = "https://api.punkapi.com/v2/beers"
