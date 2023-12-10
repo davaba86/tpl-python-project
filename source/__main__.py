@@ -103,7 +103,7 @@ if __name__ == "__main__":
     _summary_
     """
 
-    log = CodeStandardisation(logger_config="config.yaml")
+    log = CodeStandardisation(logger_config="config-logger.yaml")
     logger = log.apply_custom_logging()
 
     url = "https://api.punkapi.com/v2/beers"

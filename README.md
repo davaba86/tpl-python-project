@@ -1,8 +1,12 @@
-# Template - Python Project
+# Template Python Project
 
 ## Summary
 
-Often we find ourselves using the same type of environment, and in my case whenever I create Python projects I try to use Docker. However since I use VSCode with linting, I often need to download packages so that I'm able to use black, boto3 etc.
+When working with tech and dealing with complex environments it helps to be organised and structured so its easy to share and find projects.
+
+Since I often have the need to work on multiple Python projects I decided to have virtual environments and manage them with Make.
+
+However since I use VSCode with linting, I often need to download packages so that I'm able to use black, boto3 etc.
 
 You could create one large venv for VSCode to use as the default python interpreter but I find it better to keep envs smaller and not risk of packages colliding with each other.
 
@@ -13,17 +17,16 @@ Much of the makefile has been inspired from this [repo](https://gist.github.com/
 This assumes you have the following installed:
 
 - vscode
-- docker
 - pyenv
 - pyenv-virtualenv
 
 ## Why an API example
 
-The more I think about it I often find myself working around APIs, weather its Google Workspaces or checking the local public transport public data.
+The more I think about it I often find myself working around APIs, weather its Google Workspaces or checking the local public transport public data etc.
 
-With this in mind I've added a basic example in the **_main_**.py with API query and response in mind while also passing over ENV VARs for AWS into the Docker container.
+With this in mind I've added a basic example in the **_main_**.py with API query and response.
 
-Last but not least, I also use Postman more and more since it allows me to check that I understand the API before implementing it in code.
+I also use and recommend Postman since it allows me to check that I understand the API before implementing it in code.
 
 ## Usage
 
