@@ -1,0 +1,39 @@
+---
+    name: CI/CD
+  
+    on:
+      push:
+        branches:
+        - main
+        - "feature/*"
+        - "fix/"
+      workflow_dispatch:
+  
+    jobs:
+      ci-lint-code:
+        name: CI Lint Code
+        runs-on: ubuntu-22.04
+        environment: dev
+  
+        steps:
+        - name: Download code
+          uses: actions/checkout@v4
+  
+        - name: Install markdownlint-cli
+          run: npm install -g markdownlint-cli
+  
+        - name: Get and lint in MD files
+          run: find . -name "*.md" -type f -exec markdownlint --config .markdownlint.json {} \;
+  
+        - name: Install proselint
+          run: |
+            sudo add-apt-repository universe
+            sudo apt install python3-proselint
+  
+        - name: Get and lint written language in MD files
+          run: find . -name "*.md" -type f -exec proselint {} \;
+  
+        - name: Publish MD file(s) into output
+          id: publish
+          run: find *.md -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+  

@@ -39,7 +39,7 @@ As much as I don't like using one for many there are cases like with the extensi
 2. Create a global vscode env.
 
    ```bash
-   pyenv virtualenv 3.9.16 --force vscode-global-3.9.16
+   pyenv virtualenv PYTHON_VERSION --force vscode-global-PYTHON_VERSION
    ```
 
 3. Select it for each workspace/project so they default to it; "Python: Select Interpreter" and then "select at workspace level" at the bottom.
